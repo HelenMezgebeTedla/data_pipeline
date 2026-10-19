@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  pipeline:
+    build: .
+    env_file:
+      - .env
+    environment:
+      - WAREHOUSE_DB_PATH=/data/warehouse.db
+      - USE_BIGQUERY=${USE_BIGQUERY:-false}
+      - GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT:-}
+      - PIPELINE_ACTOR=compass-pipeline
+    volumes:
+      - pipeline_data:/data
+    restart: on-failure
+
+volumes:
+  pipeline_data:
